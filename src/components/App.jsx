@@ -61,7 +61,8 @@ export class App extends Component {
 
   onImageClick = e => {
     const { id } = e.currentTarget;
-    const largeImageURL = [...this.items]
+    const { items } = this.state;
+    const largeImageURL = [...items]
       .filter(item => item.id === Number(id))
       .map(obj => obj.largeImageURL)
       .join('');
@@ -91,15 +92,14 @@ export class App extends Component {
     }
   };
 
-  // componentDidMount() {
-  //   this.fetchImg()
-  // };
+  componentDidMount() {
+    this.fetchImg()
+  };
 
-  async componentDidUpdate(_, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
     const { startLoader, stopLoader } = this;
     const { page, perPage, searchQuery } = this.state;
-    
-    if(this.state.page !== prevState.page || this.state.query!== prevState.query ){
+    if(page !== prevState.page || this.state.query!== prevState.query ){
          try {
         startLoader();
         const response = await fetchImages(searchQuery, page, perPage);

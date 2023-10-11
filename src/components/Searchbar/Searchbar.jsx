@@ -1,23 +1,21 @@
-import React, { Component } from "react";
 import { Form, SearchHeader } from "./Searchbar.styled";
 
-export class Searchbar extends Component {
-    render() {
-        return (
-            <SearchHeader>
-            <Form class="form" onSubmit={this.onSubmit}>
-                <button type="submit" class="button">
-                    <span class="button-label">Search</span>
-                </button>
+export const Searchbar = ({ onSubmit }) => {
+  return (
+    <SearchHeader>
+      <Form onSubmit={onSubmit}>
+        <button type="submit" className="button">
+          <span>Search</span>
+        </button>
 
-                <input
-                    name="input"
-                    type="text"
-                    autocomplete="off"
-                    autofocus
-                    placeholder="Search images and photos"
-                />
-            </Form>
-            </SearchHeader>)
-    }
+        <input
+          name="search"
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+        />
+      </Form>
+    </SearchHeader>
+  );
 };
