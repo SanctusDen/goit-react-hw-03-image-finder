@@ -1,9 +1,18 @@
-import React, { Component } from "react";
+import { ImageGalleryItem } from "components/ImageGalleryItem/ImageGalleryItem";
+import { Gallery } from "./ImageGallery.styled";
 
-export class ImageGallery extends Component {
-    render() {
-            return (
-            <ul class="gallery"></ul>
-        )
-    };
+
+export const ImageGallery = ({ images, onClick }) => {
+  return (
+    <Gallery>
+      {images.map(({ id, webformatURL }) => (
+        <ImageGalleryItem
+          key={id}
+          id={id}
+          src={webformatURL}
+          onClick={onClick}
+        />
+      ))}
+    </Gallery>
+  );
 };

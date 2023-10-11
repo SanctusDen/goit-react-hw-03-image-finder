@@ -1,12 +1,11 @@
 import React from "react";
-import { Component } from "react";
+import { GalleryItem } from "./ImageGalleryItem.styled";
 
-export class ImageGalleryItem extends Component {
-    render() {
-        return (
-            <li class="gallery-item">
-                <img src="" alt="" />
-            </li>
-        )
-    }
+export const ImageGalleryItem = ({ id, src, onClick }) => {
+  return (
+    <GalleryItem onClick={onClick} id={id}>
+      <img src={src} alt="" />
+    </GalleryItem>
+  );
 };
+

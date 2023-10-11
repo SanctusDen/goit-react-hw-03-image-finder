@@ -1,13 +1,14 @@
-import React, { Component } from "react";
+import ReactDOM from 'react-dom';
+import { ModalWindow, Overlay } from './Modal.styled';
 
-export class Modal extends Component{
-    render() {
-        return (
-            <div class="overlay">
-                <div class="modal">
-                    <img src="" alt="" />
-                </div>
-            </div>
-        )   
-    }
+export const Modal = ({ url, onClick, onModalClose }) => {
+  window.addEventListener('keydown', onModalClose);
+  return ReactDOM.createPortal(
+    <Overlay onClick={onClick}>
+      <ModalWindow>
+        <img src={url} alt="" />
+      </ModalWindow>
+    </Overlay>,
+    document.querySelector('#modal-root')
+  );
 };
