@@ -7,7 +7,5 @@ export const Loader = () => (
     radius="9"
     color="green"
     ariaLabel="loading"
-    wrapperStyle
-    wrapperClass
   />
 );

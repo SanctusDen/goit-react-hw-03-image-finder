@@ -2,12 +2,11 @@ import styled from "@emotion/styled";
 
 export const Gallery = styled.ul`
     grid-gap: 12px;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: 0;
     list-style: none;
-    display: grid;
+    display: flex;
+    flex-wrap:wrap;
     max-width: calc(100vw - 40px);
+    justify-content:center;
     
     margin-left: auto;
     margin-right: auto;

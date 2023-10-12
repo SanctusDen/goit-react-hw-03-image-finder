@@ -16,17 +16,31 @@ export class App extends Component {
     selectedImageUrl: null,
     isModalOpen: false,
     isLoading: false,
-    error:null,
-  }
+    error: null,
+  };
 
-  fetchImg = async () => {
-    try {
-      const searchQuery = await fetchImages();
-      this.setState({ searchQuery: searchQuery });
-      console.log(searchQuery);
+   async componentDidUpdate(prevProps, prevState) {
+    const { startLoader, stopLoader } = this;
+    const { page, perPage, searchQuery } = this.state;
+    if(page !== prevState.page || this.state.searchQuery!== prevState.searchQuery ){
+         try {
+        startLoader();
+        const response = await fetchImages(searchQuery, page, perPage);
+        const {
+          data: { hits: items, totalHits },
+        } = response;
+        const totalPages = Math.ceil(totalHits / perPage);
+
+        this.setState(state => {
+          return { items: [...state.items, ...items], totalPages };
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        stopLoader();
+      }
     }
-    catch (error){}
-  }
+  };
 
   onSubmit = e => {
     e.preventDefault();
@@ -89,33 +103,6 @@ export class App extends Component {
     const { hideModal } = this;
     if (e.target.nodeName !== 'IMG') {
       hideModal();
-    }
-  };
-
-  componentDidMount() {
-    this.fetchImg()
-  };
-
-  async componentDidUpdate(prevProps, prevState) {
-    const { startLoader, stopLoader } = this;
-    const { page, perPage, searchQuery } = this.state;
-    if(page !== prevState.page || this.state.query!== prevState.query ){
-         try {
-        startLoader();
-        const response = await fetchImages(searchQuery, page, perPage);
-        const {
-          data: { hits: items, totalHits },
-        } = response;
-        const totalPages = Math.ceil(totalHits / perPage);
-
-        this.setState(state => {
-          return { items: [...state.items, ...items], totalPages };
-        });
-      } catch (error) {
-        console.log(error);
-      } finally {
-        stopLoader();
-      }
     }
   };
 
