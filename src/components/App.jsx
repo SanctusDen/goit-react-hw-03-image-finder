@@ -79,6 +79,12 @@ export class App extends Component {
   hideModal = () => {
     this.setState({ isModalOpen: false });
   };
+
+  onModalClose = e => {
+    if (e.key === 'Escape') {
+      this.hideModal();
+    }
+  };
   
   onBackdropClick = e => {
     const { hideModal } = this;
@@ -87,7 +93,7 @@ export class App extends Component {
     }
   };
 
-  render() {
+  render(){
   
     const {
       items,
@@ -98,7 +104,7 @@ export class App extends Component {
       isLoading,
       tags,
     } = this.state;
-  
+    
     return (
       <>
         <Searchbar onSubmit={this.onSubmit} />
@@ -112,12 +118,12 @@ export class App extends Component {
         {isModalOpen && (
           <Modal
             url={largeImageURL}
-            // tags={tags}
+            tags={tags}
             onClick={this.onBackdropClick}
             onModalClose={this.onModalClose}
           />
         )}
       </>
-    )
+    );
   };
 };
