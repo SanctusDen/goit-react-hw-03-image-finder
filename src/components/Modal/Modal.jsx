@@ -1,36 +1,38 @@
-import ReactDOM from 'react-dom';
+import React, {Component} from 'react';
 import { ModalWindow, Overlay } from './Modal.styled';
 
-export const Modal = ({ url, onClick, tags }) => {
-  const handleKeyDown = event => {
-    if (event.code === 'Escape') {
-      this.props.closeModal();
-    }
-  };
-
-  const onBackdropClick = e => {
-    const { hideModal } = this;
-    if (e.target.nodeName !== 'IMG') {
-      hideModal();
-    }
-  };
-
-  // componentDidMount() {
-  //   window.addEventListener('keydown', this.handleKeyDown);
-  // };
-
-  // componentWillUnmount() {
-  //   window.removeEventListener('keydown', this.handleKeyDown);
-  // };
+export class Modal extends Component {
   
-  return ReactDOM.createPortal(
-    <Overlay onClick={onClick}
-      handleKeyDown={handleKeyDown}>
-      <ModalWindow
-        handleBackdropClick={onBackdropClick}>
-        <img src={url} alt={tags} />
-      </ModalWindow>
-    </Overlay>,
-    document.querySelector('#modal-root')
-  );
+
+  handleKeyDown = event => {
+    if (event.code === 'Escape') {
+      this.props.hideModal();
+    }
+  };
+
+  onBackdropClick = e => {
+    if (e.target === e.currentTarget) {
+      this.props.hideModal();
+    }
+  };
+
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleKeyDown);
+  };
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleKeyDown);
+  };
+
+  render() {
+    return (
+     <Overlay onClick={this.props.onClick}
+        handleKeyDown={this.onBackdropClick}>
+        <ModalWindow>
+          <img src={this.props.url} alt={this.props.tags} />
+        </ModalWindow>
+      </Overlay>,
+      document.querySelector('#modal-root')
+  )
+  };
 };

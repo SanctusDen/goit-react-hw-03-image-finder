@@ -81,9 +81,9 @@ export class App extends Component {
     this.setState({ isModalOpen: false });
   };
 
-  onModalClose = handleKeyDown => {
-    handleKeyDown(this.hideModal());
-  }
+  // onModalClose = handleKeyDown => {
+  //   handleKeyDown();
+  // }
 
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDown);
@@ -120,7 +120,7 @@ export class App extends Component {
             url={selectedImageUrl}
             tags={tags}
             onClick={this.onBackdropClick}
-            onModalClose={this.onModalClose}
+            handleKeyDown={this.handleKeyDown}
           />
         )}
       </>
