@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { createPortal } from 'react-dom';
 import { ModalWindow, Overlay } from './Modal.styled';
 
 export class Modal extends Component {
@@ -25,9 +26,8 @@ export class Modal extends Component {
   };
 
   render() {
-    return (
-      <Overlay onClick={this.onClick}
-          handleKeyDown={this.onBackdropClick}>
+    return createPortal(
+      <Overlay onClick={this.onBackdropClick}>
         <ModalWindow>
           <img src={this.props.url} alt={this.props.tags} />
         </ModalWindow>

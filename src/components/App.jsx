@@ -120,7 +120,7 @@ export class App extends Component {
             url={selectedImageUrl}
             tags={tags}
             onClick={this.onBackdropClick}
-            handleKeyDown={this.handleKeyDown}
+            hideModal={this.hideModal}
           />
         )}
       </>
