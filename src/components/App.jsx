@@ -18,6 +18,7 @@ export class App extends Component {
     isLoading: false,
     error: null,
     tags: '',
+    
   };
 
   async componentDidUpdate(prevProps, prevState) {
@@ -48,17 +49,6 @@ export class App extends Component {
       this.setState(prev => ({searchQuery,
         items: [],
         page: 1,}));
-
-
-
-
-
-      // this.setState(() =>
-      // ({
-      //   searchQuery,
-      //   items: [],
-      //   page: 1,
-      // }));
     }
   };
 
@@ -104,9 +94,9 @@ export class App extends Component {
     }
   };
 
-  componentWillUnmount() {
-  window.removeEventListener('keydown', this.onModalClose);
-  };
+  // componentWillUnmount() {
+  // window.removeEventListener('keydown', this.onModalClose);
+  // };
 
   render(){
   
