@@ -17,13 +17,14 @@ export class App extends Component {
     isModalOpen: false,
     isLoading: false,
     error: null,
+    tags: '',
   };
 
-   async componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
     const { startLoader, stopLoader } = this;
     const { page, perPage, searchQuery } = this.state;
-    if(page !== prevState.page || this.state.searchQuery!== prevState.searchQuery ){
-         try {
+    if (page !== prevState.page || searchQuery !== prevState.searchQuery) {
+      try {
         startLoader();
         const response = await fetchImages(searchQuery, page, perPage);
         const {
@@ -42,21 +43,15 @@ export class App extends Component {
     }
   };
 
-  onSubmit = e => {
-    e.preventDefault();
-    const {
-      search: { value: searchQuery },
-    } = e.target.elements;
-    if (searchQuery.trim() === '') {
-      return;
-    }
-    if (searchQuery.trim() !== this.state.searchQuery) {
-      this.setState({
+  onSubmit = searchQuery => {
+    if (searchQuery.trim() !== prev.searchQuery) {
+      this.setState(prev => ({
         searchQuery,
         items: [],
         page: 1,
-      });
-    }
+      }))
+      }
+  }
   };
 
   startLoader = () => {
@@ -73,30 +68,16 @@ export class App extends Component {
     });
   };
 
-  onImageClick = e => {
-    const { id } = e.currentTarget;
-    const { items } = this.state;
-    const largeImageURL = [...items]
-      .filter(item => item.id === Number(id))
-      .map(obj => obj.largeImageURL)
-      .join('');
-    const selectedImageUrl = largeImageURL;
-    this.setState({ selectedImageUrl });
-    this.showModal();
-  };
-
-  showModal = () => {
-    this.setState({ isModalOpen: true });
+  onImageClick = ({ largeImageURL, tags }) => {
+    this.setState({
+      selectedImageUrl: largeImageURL,
+      tags,
+      isModalOpen: true,
+    });
   };
 
   hideModal = () => {
     this.setState({ isModalOpen: false });
-  };
-
-  onModalClose = e => {
-    if (e.key === 'Escape') {
-      this.hideModal();
-    }
   };
   
   onBackdropClick = e => {
@@ -106,22 +87,21 @@ export class App extends Component {
     }
   };
 
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.onModalClose);
-  };
-
   render() {
+  
     const {
       items,
-      selectedImageUrl,
+      largeImageURL,
       page,
       totalPages,
       isModalOpen,
       isLoading,
+      tags,
     } = this.state;
+  
     return (
       <>
-        <Searchbar onSubmit={ this.onSubmit} />
+        <Searchbar onSubmit={this.onSubmit} />
         <ImageGallery
           images={items}
           onClick={this.onImageClick}></ImageGallery>
@@ -131,12 +111,13 @@ export class App extends Component {
         {isLoading && <Loader />}
         {isModalOpen && (
           <Modal
-            url={selectedImageUrl}
+            url={largeImageURL}
+            // tags={tags}
             onClick={this.onBackdropClick}
             onModalClose={this.onModalClose}
           />
         )}
       </>
     )
-  }
+  };
 };
