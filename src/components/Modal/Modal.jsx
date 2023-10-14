@@ -26,8 +26,8 @@ export class Modal extends Component {
 
   render() {
     return (
-     <Overlay onClick={this.props.onClick}
-        handleKeyDown={this.onBackdropClick}>
+      <Overlay onClick={this.onClick}
+          handleKeyDown={this.onBackdropClick}>
         <ModalWindow>
           <img src={this.props.url} alt={this.props.tags} />
         </ModalWindow>

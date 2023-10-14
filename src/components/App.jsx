@@ -85,13 +85,13 @@ export class App extends Component {
   //   handleKeyDown();
   // }
 
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyDown);
-  };
+  // componentDidMount() {
+  //   window.addEventListener('keydown', this.handleKeyDown);
+  // };
 
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeyDown);
-  };
+  // componentWillUnmount() {
+  //   window.removeEventListener('keydown', this.handleKeyDown);
+  // };
 
   render(){
   
