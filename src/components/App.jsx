@@ -81,22 +81,17 @@ export class App extends Component {
     this.setState({ isModalOpen: false });
   };
 
-  onModalClose = e => {
-    if (e.key === 'Escape') {
-      this.hideModal();
-    }
-  };
-  
-  onBackdropClick = e => {
-    const { hideModal } = this;
-    if (e.target.nodeName !== 'IMG') {
-      hideModal();
-    }
+  onModalClose = handleKeyDown => {
+    handleKeyDown(this.hideModal());
+  }
+
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleKeyDown);
   };
 
-  // componentWillUnmount() {
-  // window.removeEventListener('keydown', this.onModalClose);
-  // };
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleKeyDown);
+  };
 
   render(){
   
