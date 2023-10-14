@@ -44,14 +44,22 @@ export class App extends Component {
   };
 
   onSubmit = searchQuery => {
-    if (searchQuery.trim() !== prev.searchQuery) {
-      this.setState(prev => ({
-        searchQuery,
+    if (searchQuery.trim() !== this.state.searchQuery) {
+      this.setState(prev => ({searchQuery,
         items: [],
-        page: 1,
-      }))
-      }
-  }
+        page: 1,}));
+
+
+
+
+
+      // this.setState(() =>
+      // ({
+      //   searchQuery,
+      //   items: [],
+      //   page: 1,
+      // }));
+    }
   };
 
   startLoader = () => {
@@ -69,11 +77,14 @@ export class App extends Component {
   };
 
   onImageClick = ({ largeImageURL, tags }) => {
-    this.setState({
+    this.setState({tags,
       selectedImageUrl: largeImageURL,
-      tags,
-      isModalOpen: true,
     });
+    this.showModal();
+  };
+
+  showModal = () => {
+    this.setState({ isModalOpen: true });
   };
 
   hideModal = () => {
@@ -93,11 +104,15 @@ export class App extends Component {
     }
   };
 
+  componentWillUnmount() {
+  window.removeEventListener('keydown', this.onModalClose);
+  };
+
   render(){
   
     const {
       items,
-      largeImageURL,
+      selectedImageUrl,
       page,
       totalPages,
       isModalOpen,
@@ -117,7 +132,7 @@ export class App extends Component {
         {isLoading && <Loader />}
         {isModalOpen && (
           <Modal
-            url={largeImageURL}
+            url={selectedImageUrl}
             tags={tags}
             onClick={this.onBackdropClick}
             onModalClose={this.onModalClose}
